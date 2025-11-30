@@ -1,0 +1,88 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- 天气应用图标 - 玻璃拟态风格 -->
+    <DrawingImage x:Key="WeatherAppIcon">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <!-- 背景渐变圆形 -->
+                <GeometryDrawing>
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="128,128" RadiusX="110" RadiusY="110"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Brush>
+                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                            <GradientStop Color="#CC64B5F6" Offset="0"/>
+                            <GradientStop Color="#9942A5F5" Offset="0.5"/>
+                            <GradientStop Color="#E62196F3" Offset="1"/>
+                        </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                </GeometryDrawing>
+
+                <!-- 太阳 -->
+                <GeometryDrawing>
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="128,100" RadiusX="28" RadiusY="28"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Brush>
+                        <RadialGradientBrush Center="50%,50%" GradientOrigin="50%,50%">
+                            <GradientStop Color="#FFD54F" Offset="0"/>
+                            <GradientStop Color="#FFC107" Offset="0.7"/>
+                            <GradientStop Color="#CFFFA000" Offset="1"/>
+                        </RadialGradientBrush>
+                    </GeometryDrawing.Brush>
+                </GeometryDrawing>
+
+                <!-- 云朵 - 中心 -->
+                <GeometryDrawing>
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="120,140" RadiusX="30" RadiusY="22"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Brush>
+                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                            <GradientStop Color="#F2FFFFFF" Offset="0"/>
+                            <GradientStop Color="#D9E3F2FD" Offset="1"/>
+                        </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                </GeometryDrawing>
+
+                <!-- 云朵 - 右侧 -->
+                <GeometryDrawing>
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="150,140" RadiusX="28" RadiusY="20"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Brush>
+                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                            <GradientStop Color="#F2FFFFFF" Offset="0"/>
+                            <GradientStop Color="#D9E3F2FD" Offset="1"/>
+                        </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                </GeometryDrawing>
+
+                <!-- 云朵 - 上部 -->
+                <GeometryDrawing>
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="135,130" RadiusX="25" RadiusY="18"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Brush>
+                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                            <GradientStop Color="#F2FFFFFF" Offset="0"/>
+                            <GradientStop Color="#D9E3F2FD" Offset="1"/>
+                        </LinearGradientBrush>
+                    </GeometryDrawing.Brush>
+                </GeometryDrawing>
+
+                <!-- 边框光泽 -->
+                <GeometryDrawing Brush="{x:Null}">
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="128,128" RadiusX="110" RadiusY="110"/>
+                    </GeometryDrawing.Geometry>
+                    <GeometryDrawing.Pen>
+                        <Pen Brush="#66FFFFFF" Thickness="2"/>
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+</ResourceDictionary>

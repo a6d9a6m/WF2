@@ -1,0 +1,57 @@
+root = true
+
+# All files
+[*]
+indent_style = space
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Code files
+[*.{cs,csx,vb,vbx}]
+indent_size = 4
+
+# XAML files
+[*.{axaml,xaml}]
+indent_size = 4
+
+# XML project files
+[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
+indent_size = 2
+
+# JSON files
+[*.json]
+indent_size = 2
+
+# C# files
+[*.cs]
+
+# Nullable reference types
+csharp_nullable_reference_types = enable
+
+# Modern C# preferences
+csharp_prefer_simple_using_statement = true
+csharp_prefer_braces = true
+csharp_style_namespace_declarations = file_scoped
+csharp_prefer_static_local_function = true
+csharp_prefer_simple_default_expression = true
+csharp_style_pattern_local_over_anonymous_function = true
+csharp_using_directive_placement = outside_namespace
+csharp_style_inlined_variable_declaration = true
+csharp_style_throw_expression = true
+csharp_style_conditional_delegate_call = true
+
+# Code style defaults
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false
+
+# Naming conventions
+dotnet_naming_rule.private_fields_should_be_camel_case.severity = suggestion
+dotnet_naming_rule.private_fields_should_be_camel_case.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_camel_case.style = camel_case_underscore
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+dotnet_naming_style.camel_case_underscore.capitalization = camel_case
+dotnet_naming_style.camel_case_underscore.required_prefix = _

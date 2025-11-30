@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(dotnet add:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dir \"D:\\CCY\\Code\\C#\\rider\\AvaioniaMvvm\\WF2\" /b)",
+      "Bash(dotnet clean:*)",
+      "Bash(dotnet run:*)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(dotnet list:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

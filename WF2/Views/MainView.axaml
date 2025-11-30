@@ -1,0 +1,138 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:WF2.Library.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WF2.Views.MainView"
+             x:DataType="vm:MainViewModel"
+             DataContext="{Binding MainViewModel, Source={StaticResource ServiceLocator}}">
+
+    <UserControl.Styles>
+        <Style Selector="UserControl">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        
+        <Style Selector="UserControl.dark">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        
+        <Style Selector="TextBlock.title">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+        <Style Selector="TextBlock.title.dark">
+            <Setter Property="Foreground" Value="#f0f0f0"/>
+        </Style>
+        
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="#F5F5F5"/>
+            <Setter Property="Opacity" Value="0.7"/>
+        </Style>
+        
+        <Style Selector="Border.card.dark">
+            <Setter Property="Background" Value="#3c3c3c"/>
+            <Setter Property="Opacity" Value="0.7"/>
+        </Style>
+        
+        <Style Selector="TextBox.search">
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        
+        <Style Selector="TextBox.search.dark">
+            <Setter Property="Background" Value="#3c3c3c"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto, *, Auto">
+        <!-- 背景图片层 -->
+        <Image Grid.RowSpan="3" 
+               Source="{Binding BackgroundImagePath}" 
+               Stretch="UniformToFill" 
+               IsHitTestVisible="False"
+               Opacity="0.8"/>
+
+        <!--标题栏 -->
+        <StackPanel Grid.Row="0" Margin="30,30,30,20">
+            <TextBlock Text="{Binding Greeting}"
+                       FontSize="32"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Classes="title"/>
+            <TextBlock Text="{Binding SystemSubtitle}"
+                       FontSize="14"
+                       HorizontalAlignment="Center"
+                       Foreground="#E8F0FE"
+                       Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- 天气信息卡片 -->
+        <Border Grid.Row="1"
+                Margin="40,10"
+                Padding="40"
+                CornerRadius="24"
+                MaxWidth="520"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BoxShadow="0 12 35 0 #40000000"
+                Classes="card"
+                Opacity="0.75">
+
+            <StackPanel Spacing="20">
+                <!-- 天气图标 -->
+                <TextBlock Text="{Binding WeatherIcon}"
+                          FontSize="90"
+                          HorizontalAlignment="Center"/>
+
+                <!-- 城市名称 -->
+                <TextBlock Text="{Binding LocationName}"
+                          FontSize="26"
+                          FontWeight="SemiBold"
+                          HorizontalAlignment="Center"
+                          Foreground="#1A1A1A"/>
+
+                <!-- 温度显示 -->
+                <TextBlock Text="{Binding Temperature}"
+                          FontSize="64"
+                          FontWeight="Light"
+                          HorizontalAlignment="Center"
+                          Foreground="#2196F3"/>
+
+                <!-- 天气状况 -->
+                <TextBlock Text="{Binding ConditionText}"
+                          FontSize="20"
+                          HorizontalAlignment="Center"
+                          Foreground="#666666"/>
+
+                <!-- 详细信息 -->
+                <Grid ColumnDefinitions="*,*" Margin="0,10,0,0">
+                    <!-- 湿度 -->
+                    <StackPanel Grid.Column="0" Spacing="5" HorizontalAlignment="Center">
+                        <TextBlock Text="💧" FontSize="20"
+                                  HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Humidity}"
+                                  FontSize="14"
+                                  FontWeight="Medium"
+                                  HorizontalAlignment="Center"
+                                  Foreground="#424242"
+                                  TextAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- 体感温度 -->
+                    <StackPanel Grid.Column="1" Spacing="5" HorizontalAlignment="Center">
+                        <TextBlock Text="🌡️" FontSize="20"
+                                  HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding FeelsLike}"
+                                  FontSize="14"
+                                  FontWeight="Medium"
+                                  HorizontalAlignment="Center"
+                                  Foreground="#424242"
+                                  TextAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
+

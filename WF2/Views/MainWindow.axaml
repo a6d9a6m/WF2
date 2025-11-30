@@ -1,0 +1,217 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+        mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="600"
+        x:Class="WF2.Views.MainWindow"
+        DataContext="{Binding MainWindowViewModel, Source={StaticResource ServiceLocator}}"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="{Binding Title}"
+        Width="1024" Height="600">
+
+    <Window.Styles>
+        <Style Selector="Window">
+            <Setter Property="Background" Value="#FFFFFF"/>
+        </Style>
+        <Style Selector="Window.dark">
+            <Setter Property="Background" Value="#1E1E1E"/>
+        </Style>
+        
+        <!-- 左侧导航菜单样式 -->
+        <Style Selector="Border.navigation-menu">
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#E5E5E5"/>
+        </Style>
+        <Style Selector="Border.navigation-menu.dark">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#404040"/>
+        </Style>
+        
+        <!-- 导航标题样式 -->
+        <Style Selector="TextBlock.navigation-title">
+            <Setter Property="Foreground" Value="#1A1A1A"/>
+        </Style>
+        <Style Selector="TextBlock.navigation-title.dark">
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+        
+        <!-- 导航按钮样式 -->
+        <Style Selector="Button.navigation-button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="Button.navigation-button:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#F5F5F5"/>
+        </Style>
+        <Style Selector="Button.navigation-button.dark:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#3A3A3A"/>
+        </Style>
+        
+        <!-- 导航按钮文本样式 -->
+        <Style Selector="TextBlock.navigation-text">
+            <Setter Property="Foreground" Value="#424242"/>
+        </Style>
+        <Style Selector="TextBlock.navigation-text.dark">
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+        
+        <!-- 分隔线样式 -->
+        <Style Selector="Border.separator">
+            <Setter Property="Background" Value="#E0E0E0"/>
+        </Style>
+        <Style Selector="Border.separator.dark">
+            <Setter Property="Background" Value="#404040"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid ColumnDefinitions="240,*">
+        <!-- 左侧导航菜单 -->
+        <Border Grid.Column="0"
+                Classes="navigation-menu"
+                BorderThickness="0,0,1,0"
+                Padding="15">
+            <StackPanel Spacing="8">
+                <TextBlock Text="{Binding NavigationMenu}"
+                          Classes="navigation-title"
+                          FontSize="20"
+                          FontWeight="Bold"
+                          Margin="10,10,0,25"/>
+
+                <!-- 天气首页 -->
+                <Button Classes="navigation-button"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Command="{Binding NavigateToMainCommand}"
+                        Padding="15,12"
+                        CornerRadius="8">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Border Background="#E3F2FD"
+                                CornerRadius="6"
+                                Width="32"
+                                Height="32">
+                            <materialIcons:MaterialIcon Kind="WeatherPartlyCloudy" Width="20" Height="20"
+                                                       Foreground="#1976D2"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="{Binding WeatherHome}"
+                                  Classes="navigation-text"
+                                  FontSize="14"
+                                  FontWeight="Medium"
+                                  VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 天气详情 -->
+                <Button Classes="navigation-button"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Command="{Binding NavigateToWeatherDetailCommand}"
+                        Padding="15,12"
+                        CornerRadius="8">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Border Background="#FFF3E0"
+                                CornerRadius="6"
+                                Width="32"
+                                Height="32">
+                            <materialIcons:MaterialIcon Kind="ChartLine" Width="20" Height="20"
+                                                       Foreground="#F57C00"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="{Binding WeatherDetail}"
+                                  Classes="navigation-text"
+                                  FontSize="14"
+                                  FontWeight="Medium"
+                                  VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 城市管理 -->
+                <Button Classes="navigation-button"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Command="{Binding NavigateToCitiesCommand}"
+                        Padding="15,12"
+                        CornerRadius="8">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Border Background="#E8F5E9"
+                                CornerRadius="6"
+                                Width="32"
+                                Height="32">
+                            <materialIcons:MaterialIcon Kind="MapMarker" Width="20" Height="20"
+                                                       Foreground="#388E3C"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="{Binding CityManagement}"
+                                  Classes="navigation-text"
+                                  FontSize="14"
+                                  FontWeight="Medium"
+                                  VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 分隔线 -->
+                <Border Classes="separator"
+                        Height="1"
+                        Margin="10,15"/>
+
+                <!-- 设置 -->
+                <Button Classes="navigation-button"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Command="{Binding NavigateToSettingsCommand}"
+                        Padding="15,12"
+                        CornerRadius="8">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Border Background="#F3E5F5"
+                                CornerRadius="6"
+                                Width="32"
+                                Height="32">
+                            <materialIcons:MaterialIcon Kind="Cog" Width="20" Height="20"
+                                                       Foreground="#7B1FA2"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="{Binding Settings}"
+                                  Classes="navigation-text"
+                                  FontSize="14"
+                                  FontWeight="Medium"
+                                  VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 关于 -->
+                <Button Classes="navigation-button"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        Command="{Binding NavigateToAboutCommand}"
+                        Padding="15,12"
+                        CornerRadius="8">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Border Background="#E1F5FE"
+                                CornerRadius="6"
+                                Width="32"
+                                Height="32">
+                            <materialIcons:MaterialIcon Kind="InformationOutline" Width="20" Height="20"
+                                                       Foreground="#0288D1"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="{Binding About}"
+                                  Classes="navigation-text"
+                                  FontSize="14"
+                                  FontWeight="Medium"
+                                  VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <!-- 右侧内容区域 -->
+        <ContentControl Grid.Column="1" Content="{Binding Content}"/>
+    </Grid>
+</Window>
+

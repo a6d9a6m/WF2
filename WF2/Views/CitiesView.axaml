@@ -1,0 +1,233 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:WF2.Library.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WF2.Views.CitiesView"
+             x:DataType="vm:CitiesViewModel"
+             DataContext="{Binding CitiesViewModel, Source={StaticResource ServiceLocator}}">
+
+    <UserControl.Styles>
+        <Style Selector="UserControl">
+            <Setter Property="Background" Value="#f5f5f5"/>
+        </Style>
+        
+        <Style Selector="UserControl.dark">
+            <Setter Property="Background" Value="#1e1e1e"/>
+        </Style>
+        
+        <Style Selector="TextBlock.title">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#2c3e50"/>
+        </Style>
+        
+        <Style Selector="TextBlock.title.dark">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+        <Style Selector="TextBlock.subtitle">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#7f8c8d"/>
+        </Style>
+        
+        <Style Selector="TextBlock.subtitle.dark">
+            <Setter Property="Foreground" Value="#b0b0b0"/>
+        </Style>
+        
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#e0e0e0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="15"/>
+        </Style>
+        
+        <Style Selector="Border.card.dark">
+            <Setter Property="Background" Value="#2c2c2c"/>
+            <Setter Property="BorderBrush" Value="#404040"/>
+        </Style>
+        
+        <Style Selector="Border.city-item">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#ecf0f1"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Padding" Value="10,5"/>
+        </Style>
+        
+        <Style Selector="Border.city-item.dark">
+            <Setter Property="Background" Value="#2c2c2c"/>
+            <Setter Property="BorderBrush" Value="#404040"/>
+        </Style>
+        
+        <Style Selector="TextBlock.city-name">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        
+        <Style Selector="TextBlock.city-name.dark">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+        <Style Selector="TextBlock.city-country">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#7f8c8d"/>
+        </Style>
+        
+        <Style Selector="TextBlock.city-country.dark">
+            <Setter Property="Foreground" Value="#b0b0b0"/>
+        </Style>
+        
+        <Style Selector="TextBlock.temperature">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        
+        <Style Selector="TextBlock.temperature.dark">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+        <Style Selector="TextBlock.condition">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#7f8c8d"/>
+        </Style>
+        
+        <Style Selector="TextBlock.condition.dark">
+            <Setter Property="Foreground" Value="#b0b0b0"/>
+        </Style>
+        
+        <Style Selector="Button.refresh">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style Selector="Button.refresh:pointerover">
+            <Setter Property="Background" Value="#1976D2"/>
+        </Style>
+        
+        <Style Selector="Button.delete">
+            <Setter Property="Background" Value="#757575"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style Selector="Button.delete:pointerover">
+            <Setter Property="Background" Value="#424242"/>
+        </Style>
+        
+        <Style Selector="TextBlock.empty">
+            <Setter Property="Foreground" Value="#95a5a6"/>
+        </Style>
+        
+        <Style Selector="TextBlock.empty.dark">
+            <Setter Property="Foreground" Value="#b0b0b0"/>
+        </Style>
+        
+        <Style Selector="TextBlock.hint">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#95a5a6"/>
+        </Style>
+        
+        <Style Selector="TextBlock.hint.dark">
+            <Setter Property="Foreground" Value="#b0b0b0"/>
+        </Style>
+        
+        <Style Selector="TextBlock.status">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#2196F3"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style Selector="TextBlock.status.dark">
+            <Setter Property="Foreground" Value="#64B5F6"/>
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer>
+        <StackPanel Margin="20" Spacing="15">
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="{Binding Title}"
+                              Classes="title"/>
+
+                    <TextBlock Text="{Binding Subtitle}"
+                              Classes="subtitle"
+                              Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                       Content="{Binding RefreshButton, StringFormat='🔄 {0}'}"
+                       Command="{Binding RefreshCitiesCommand}"
+                       Classes="refresh"
+                       IsEnabled="{Binding !IsLoading}"
+                       VerticalAlignment="Center"
+                       Cursor="Hand"/>
+            </Grid>
+
+            <!-- 城市列表 -->
+            <Border Classes="card">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="{Binding SavedCitiesLabel}" FontSize="18" FontWeight="SemiBold"/>
+
+                    <ItemsControl ItemsSource="{Binding Cities}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Classes="city-item">
+                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                                        <Button Grid.Column="0"
+                                                Content="📍"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                FontSize="16"
+                                                Margin="0,0,10,0"
+                                                Cursor="Hand"
+                                                Command="{Binding $parent[UserControl].DataContext.SelectCityCommand}"
+                                                CommandParameter="{Binding CityName}"/>
+                                        <StackPanel Grid.Column="1">
+                                            <Button Content="{Binding LocationName}"
+                                                    Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Classes="city-name"
+                                                    Cursor="Hand"
+                                                    Command="{Binding $parent[UserControl].DataContext.SelectCityCommand}"
+                                                    CommandParameter="{Binding CityName}"
+                                                    HorizontalAlignment="Left"/>
+                                            <TextBlock Text="{Binding Country}" Classes="city-country"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2" Margin="10,0" HorizontalAlignment="Right">
+                                            <TextBlock Text="{Binding Temperature, StringFormat='{}{0:F1}°C'}" Classes="temperature"/>
+                                            <TextBlock Text="{Binding ConditionText}" Classes="condition"/>
+                                        </StackPanel>
+                                        <Button Grid.Column="3"
+                                                Content="{Binding $parent[UserControl].DataContext.DeleteButton}"
+                                                Command="{Binding $parent[UserControl].DataContext.DeleteCityCommand}"
+                                                CommandParameter="{Binding CityName}"
+                                                Classes="delete"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <TextBlock Text="{Binding NoCitiesMessage}"
+                              IsVisible="{Binding !Cities.Count}"
+                              Classes="empty"
+                              HorizontalAlignment="Center"
+                              Margin="20"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="{Binding HintMessage}"
+                      Classes="hint"
+                      TextWrapping="Wrap"/>
+
+            <TextBlock Text="{Binding StatusMessage}"
+                      Classes="status"
+                      HorizontalAlignment="Center"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

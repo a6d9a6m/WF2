@@ -1,0 +1,355 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="WF2.Views.WeatherDetailView"
+             DataContext="{Binding WeatherDetailViewModel, Source={StaticResource ServiceLocator}}">
+
+    <UserControl.Styles>
+        <Style Selector="UserControl">
+            <Setter Property="Background" Value="#f5f5f5"/>
+        </Style>
+        
+        <Style Selector="UserControl.dark">
+            <Setter Property="Background" Value="#1e1e1e"/>
+        </Style>
+        
+        <Style Selector="Border.card">
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        
+        <Style Selector="Border.card.dark">
+            <Setter Property="Background" Value="#2c2c2c"/>
+        </Style>
+        
+        <Style Selector="TextBlock.title">
+            <Setter Property="Foreground" Value="#2c3e50"/>
+        </Style>
+        
+        <Style Selector="TextBlock.title.dark">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        
+        <Style Selector="TextBlock.subtitle">
+            <Setter Property="Foreground" Value="#7f8c8d"/>
+        </Style>
+        
+        <Style Selector="TextBlock.subtitle.dark">
+            <Setter Property="Foreground" Value="#b0b0b0"/>
+        </Style>
+        
+        <Style Selector="TextBlock.value">
+            <Setter Property="Foreground" Value="#2196F3"/>
+        </Style>
+
+        <Style Selector="TextBlock.value.dark">
+            <Setter Property="Foreground" Value="#64B5F6"/>
+        </Style>
+        
+        <Style Selector="Border.info-card">
+            <Setter Property="Background" Value="#ecf0f1"/>
+        </Style>
+        
+        <Style Selector="Border.info-card.dark">
+            <Setter Property="Background" Value="#34495e"/>
+        </Style>
+        
+        <Style Selector="TextBlock.info-label">
+            <Setter Property="Foreground" Value="#7f8c8d"/>
+        </Style>
+        
+        <Style Selector="TextBlock.info-label.dark">
+            <Setter Property="Foreground" Value="#b0b0b0"/>
+        </Style>
+        
+        <Style Selector="Border.tip">
+            <Setter Property="Background" Value="#fff3cd"/>
+            <Setter Property="BorderBrush" Value="#ffc107"/>
+        </Style>
+        
+        <Style Selector="Border.tip.dark">
+            <Setter Property="Background" Value="#8b6914"/>
+            <Setter Property="BorderBrush" Value="#ffc107"/>
+        </Style>
+        
+        <Style Selector="TextBlock.tip-text">
+            <Setter Property="Foreground" Value="#856404"/>
+        </Style>
+        
+        <Style Selector="TextBlock.tip-text.dark">
+            <Setter Property="Foreground" Value="#f4e4bc"/>
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer>
+        <Grid>
+            <!-- 主内容 -->
+            <StackPanel Margin="20" Spacing="20">
+            <!-- 标题栏 -->
+            <Grid ColumnDefinitions="*,Auto,Auto">
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="{Binding Title}"
+                              FontSize="28"
+                              FontWeight="Bold"
+                              Classes="title"/>
+
+                    <TextBlock Text="{Binding LocationName}"
+                              FontSize="18"
+                              Classes="subtitle"
+                              Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                       Content="⭐ 关注"
+                       Command="{Binding ToggleFavoriteCommand}"
+                       Background="#2196F3"
+                       Foreground="White"
+                       CornerRadius="8"
+                       Padding="15,8"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       Margin="0,0,10,0"
+                       VerticalAlignment="Center"
+                       Cursor="Hand">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#1976D2"/>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+
+                <Button Grid.Column="2"
+                       Content="{Binding RefreshButton, StringFormat='🔄 {0}'}"
+                       Command="{Binding RefreshWeatherCommand}"
+                       Background="#2196F3"
+                       Foreground="White"
+                       CornerRadius="8"
+                       Padding="15,8"
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       IsEnabled="{Binding !IsLoading}"
+                       VerticalAlignment="Center"
+                       Cursor="Hand">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#1976D2"/>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+            </Grid>
+
+            <!-- 城市搜索栏 -->
+            <Border Background="White"
+                    Classes="card"
+                    CornerRadius="12"
+                    Padding="15"
+                    BoxShadow="0 5 15 0 #15000000">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBox Grid.Column="0"
+                             Text="{Binding SearchCityInput}"
+                             Watermark="输入城市名称（中文或英文）"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             VerticalContentAlignment="Center"
+                             FontSize="14"/>
+                    <Button Grid.Column="1"
+                            Content="🔍 搜索"
+                            Command="{Binding SearchCityCommand}"
+                            Background="#2196F3"
+                            Foreground="White"
+                            CornerRadius="8"
+                            Padding="20,10"
+                            BorderThickness="0"
+                            IsEnabled="{Binding !IsLoading}"
+                            Margin="10,0,0,0"
+                            Cursor="Hand">
+                        <Button.Styles>
+                            <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                <Setter Property="Background" Value="#1976D2"/>
+                            </Style>
+                        </Button.Styles>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- 主要天气信息卡片 -->
+            <Border Classes="card"
+                    CornerRadius="15"
+                    Padding="30"
+                    BoxShadow="0 5 20 0 #20000000">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Grid.Column="0" Spacing="10">
+                        <TextBlock Text="{Binding Temperature}"
+                              FontSize="48"
+                              FontWeight="Light"
+                              Classes="value"/>
+
+                    <TextBlock Text="{Binding ConditionText}"
+                              FontSize="20"
+                              Classes="subtitle"/>
+
+                    <TextBlock Text="{Binding FeelsLike}"
+                              FontSize="14"
+                              Classes="subtitle"/>
+                    </StackPanel>
+
+                    <TextBlock Grid.Column="1"
+                              Text="{Binding WeatherIcon}"
+                              FontSize="72"
+                              VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <!-- 详细天气数据 -->
+            <Border Classes="card"
+                    CornerRadius="15"
+                    Padding="25"
+                    BoxShadow="0 5 20 0 #20000000">
+                <StackPanel Spacing="15">
+                    <TextBlock Text="{Binding DetailedWeatherDataLabel}"
+                              FontSize="20"
+                              FontWeight="SemiBold"
+                              Classes="title"/>
+
+                    <!-- 第一行：湿度、风速 -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                        <Border Grid.Column="0"
+                               Classes="info-card"
+                               CornerRadius="10"
+                               Padding="15">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="{Binding HumidityLabel, StringFormat='💧 {0}'}" FontSize="14" Classes="info-label"/>
+                                <TextBlock Text="{Binding Humidity}"
+                                          FontSize="20"
+                                          FontWeight="SemiBold"
+                                          Classes="value"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1"
+                               Classes="info-card"
+                               CornerRadius="10"
+                               Padding="15">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="{Binding WindLabel, StringFormat='💨 {0}'}" FontSize="14" Classes="info-label"/>
+                                <TextBlock Text="{Binding WindKph, StringFormat='{}{0:F1} km/h'}"
+                                          FontSize="20"
+                                          FontWeight="SemiBold"
+                                          Classes="value"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- 第二行：风向、气压 -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                        <Border Grid.Column="0"
+                               Classes="info-card"
+                               CornerRadius="10"
+                               Padding="15">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="{Binding WindDirectionLabel, StringFormat='🧭 {0}'}" FontSize="14" Classes="info-label"/>
+                                <TextBlock Text="{Binding WindDirection}"
+                                          FontSize="20"
+                                          FontWeight="SemiBold"
+                                          Classes="value"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1"
+                               Classes="info-card"
+                               CornerRadius="10"
+                               Padding="15">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="{Binding PressureLabel, StringFormat='🌡️ {0}'}" FontSize="14" Classes="info-label"/>
+                                <TextBlock Text="{Binding PressureMb, StringFormat='{}{0:F0} mb'}"
+                                          FontSize="20"
+                                          FontWeight="SemiBold"
+                                          Classes="value"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- 第三行：能见度、云量 -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                        <Border Grid.Column="0"
+                               Classes="info-card"
+                               CornerRadius="10"
+                               Padding="15">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="{Binding VisibilityLabel, StringFormat='👁️ {0}'}" FontSize="14" Classes="info-label"/>
+                                <TextBlock Text="{Binding VisibilityKm, StringFormat='{}{0:F1} km'}"
+                                          FontSize="20"
+                                          FontWeight="SemiBold"
+                                          Classes="value"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1"
+                               Classes="info-card"
+                               CornerRadius="10"
+                               Padding="15">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="{Binding CloudLabel, StringFormat='☁️ {0}'}" FontSize="14" Classes="info-label"/>
+                                <TextBlock Text="{Binding Cloud, StringFormat='{}{0}%'}"
+                                          FontSize="20"
+                                          FontWeight="SemiBold"
+                                          Classes="value"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- 第四行：紫外线指数 -->
+                    <Border Classes="info-card"
+                           CornerRadius="10"
+                           Padding="15">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="{Binding UvIndexLabel, StringFormat='☀️ {0}'}" FontSize="14" Classes="info-label"/>
+                            <TextBlock Text="{Binding UvIndex, StringFormat='{}{0:F1}'}"
+                                      FontSize="20"
+                                      FontWeight="SemiBold"
+                                      Classes="value"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- 状态消息 -->
+            <TextBlock Text="{Binding StatusMessage}"
+                      FontSize="12"
+                      Foreground="#3498db"
+                      HorizontalAlignment="Center"
+                      FontWeight="SemiBold"/>
+
+            <!-- 提示信息 -->
+            <Border Classes="tip"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="15">
+                <StackPanel Spacing="5">
+                    <TextBlock Text="{Binding TipLabel, StringFormat='💡 {0}'}" FontSize="14" FontWeight="SemiBold" Classes="tip-text"/>
+                    <TextBlock Text="{Binding Tip1Text}" FontSize="12" Classes="tip-text"/>
+                    <TextBlock Text="{Binding Tip2Text}" FontSize="12" Classes="tip-text"/>
+                    <TextBlock Text="{Binding Tip3Text}" FontSize="12" Classes="tip-text"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+            <!-- Toast 通知 -->
+            <Border Background="#2196F3"
+                    CornerRadius="8"
+                    Padding="20,15"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0,20,0,0"
+                    BoxShadow="0 4 12 0 #40000000"
+                    IsVisible="{Binding ShowToast}">
+                <TextBlock Text="{Binding ToastMessage}"
+                          Foreground="White"
+                          FontSize="14"
+                          FontWeight="SemiBold"
+                          TextAlignment="Center"/>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
