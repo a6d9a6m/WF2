@@ -6,7 +6,7 @@ namespace WF2.Services;
 
 public class MenuNavigationService : IMenuNavigationService
 {
-    public void NavigateTo(string view, object? parameter = null)
+    public async void NavigateTo(string view, object? parameter = null)
     {
         ViewModelBase viewModel = view switch
         {
@@ -25,5 +25,20 @@ public class MenuNavigationService : IMenuNavigationService
         }
 
         ServiceLocator.Current.MainWindowViewModel.Content = viewModel;
+        
+        // 页面切换时自动刷新
+        switch (viewModel)
+        {
+            case MainViewModel mainViewModel:
+                await mainViewModel.RefreshWeatherOnPageSwitchAsync();
+                break;
+            case WeatherDetailViewModel weatherDetailViewModel:
+                await weatherDetailViewModel.OnPageActivatedAsync();
+                break;
+            case CitiesViewModel citiesViewModel:
+                await citiesViewModel.OnPageActivatedAsync();
+                break;
+            // SettingsViewModel和AboutViewModel不需要自动刷新
+        }
     }
 }

@@ -87,7 +87,7 @@
             <!-- 主内容 -->
             <StackPanel Margin="20" Spacing="20">
             <!-- 标题栏 -->
-            <Grid ColumnDefinitions="*,Auto,Auto">
+            <Grid ColumnDefinitions="*,Auto">
                 <StackPanel Grid.Column="0">
                     <TextBlock Text="{Binding Title}"
                               FontSize="28"
@@ -110,25 +110,6 @@
                        FontSize="14"
                        FontWeight="SemiBold"
                        Margin="0,0,10,0"
-                       VerticalAlignment="Center"
-                       Cursor="Hand">
-                    <Button.Styles>
-                        <Style Selector="Button:pointerover /template/ ContentPresenter">
-                            <Setter Property="Background" Value="#1976D2"/>
-                        </Style>
-                    </Button.Styles>
-                </Button>
-
-                <Button Grid.Column="2"
-                       Content="{Binding RefreshButton, StringFormat='🔄 {0}'}"
-                       Command="{Binding RefreshWeatherCommand}"
-                       Background="#2196F3"
-                       Foreground="White"
-                       CornerRadius="8"
-                       Padding="15,8"
-                       FontSize="14"
-                       FontWeight="SemiBold"
-                       IsEnabled="{Binding !IsLoading}"
                        VerticalAlignment="Center"
                        Cursor="Hand">
                     <Button.Styles>

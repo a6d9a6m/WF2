@@ -14,6 +14,11 @@ public class WeatherCacheService : IWeatherCacheService
         return new LiteDatabase(DatabasePath);
     }
 
+    public Task MigrateDatabaseAsync()
+    {
+        return ClearAllAsync();
+    }
+
     public Task SaveWeatherAsync(WeatherCache weather)
     {
         return Task.Run(() =>
@@ -26,13 +31,27 @@ public class WeatherCacheService : IWeatherCacheService
 
             if (existing != null)
             {
-                // 更新现有数据
+                // 更新现有数据，保留ID
                 weather.Id = existing.Id;
+
+                // 确保所有字段都有值，即使是默认值
+                if (weather.WindDirection == null) weather.WindDirection = "--";
+                if (weather.PressureMb == 0) weather.PressureMb = 1013.25; // 标准大气压
+                if (weather.VisibilityKm == 0) weather.VisibilityKm = 10; // 默认能见度
+                if (weather.UvIndex == 0) weather.UvIndex = 1; // 默认低紫外线指数
+                if (weather.Cloud == 0) weather.Cloud = 25; // 默认少量云
+
                 collection.Update(weather);
             }
             else
             {
-                // 插入新数据
+                // 插入新数据，确保所有字段都有值
+                if (weather.WindDirection == null) weather.WindDirection = "--";
+                if (weather.PressureMb == 0) weather.PressureMb = 1013.25; // 标准大气压
+                if (weather.VisibilityKm == 0) weather.VisibilityKm = 10; // 默认能见度
+                if (weather.UvIndex == 0) weather.UvIndex = 1; // 默认低紫外线指数
+                if (weather.Cloud == 0) weather.Cloud = 25; // 默认少量云
+
                 collection.Insert(weather);
             }
 
@@ -47,6 +66,24 @@ public class WeatherCacheService : IWeatherCacheService
             using var db = GetDatabase();
             var collection = db.GetCollection<WeatherCache>(CollectionName);
             return collection.FindOne(x => x.CityName == cityName);
+        });
+    }
+
+    public Task<WeatherCache?> GetValidWeatherAsync(string cityName, int expirationMinutes = 10)
+    {
+        return Task.Run<WeatherCache?>(() =>
+        {
+            using var db = GetDatabase();
+            var collection = db.GetCollection<WeatherCache>(CollectionName);
+            var cache = collection.FindOne(x => x.CityName == cityName);
+
+            // 检查缓存是否存在且未过期
+            if (cache != null && !cache.IsExpired(expirationMinutes))
+            {
+                return cache;
+            }
+
+            return null;
         });
     }
 

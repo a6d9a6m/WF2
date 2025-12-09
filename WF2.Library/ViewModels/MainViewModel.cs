@@ -144,6 +144,36 @@ public partial class MainViewModel : ViewModelBase
     public void PushContent(ViewModelBase content)
     {
         Content = content;
+        // 页面切换时自动刷新天气数据
+        _ = RefreshWeatherOnPageSwitchAsync();
+    }
+
+    // 页面切换时自动刷新天气
+    public async Task RefreshWeatherOnPageSwitchAsync()
+    {
+        try
+        {
+            // 尝试获取有效的缓存数据（10分钟内）
+            var validCache = await _cacheService.GetValidWeatherAsync(CurrentCity, 10);
+            
+            if (validCache != null)
+            {
+                // 有有效缓存，直接显示
+                UpdateWeatherInfoFromCache(validCache);
+                Console.WriteLine($"[INFO] 页面切换使用有效缓存数据: {validCache.CityName}");
+            }
+            else
+            {
+                // 无有效缓存，尝试获取实时数据
+                await CheckWeatherAsync(CurrentCity);
+                Console.WriteLine($"[INFO] 页面切换刷新天气数据: {CurrentCity}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[WARN] 页面切换刷新失败，尝试加载缓存：{ex.Message}");
+            await LoadCachedWeatherAsync();
+        }
     }
 
     private async Task RefreshWeatherAsync()
@@ -190,7 +220,20 @@ public partial class MainViewModel : ViewModelBase
             // 初始化UI文本
             UpdateUIText();
 
-            await CheckWeatherAsync(CurrentCity);
+            // 尝试获取有效的缓存数据（10分钟内）
+            var validCache = await _cacheService.GetValidWeatherAsync(CurrentCity, 10);
+            
+            if (validCache != null)
+            {
+                // 有有效缓存，直接显示
+                UpdateWeatherInfoFromCache(validCache);
+                Console.WriteLine($"[INFO] 使用有效缓存数据: {validCache.CityName}");
+            }
+            else
+            {
+                // 无有效缓存，尝试获取实时数据
+                await CheckWeatherAsync(CurrentCity);
+            }
         }
         catch (Exception ex)
         {
@@ -259,7 +302,7 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    // 🟨 更新 UI 数据
+    //  更新 UI 数据
     private void UpdateWeatherInfo(WeatherApiResponse data)
     {
         LocationName = $"{data.Location.Name}, {data.Location.Country}";
@@ -288,7 +331,7 @@ public partial class MainViewModel : ViewModelBase
         WindKph = cache.WindKph;
         FeelsLike = $"{FeelsLikeLabel} {cache.Temperature:F1}°C"; // 更新体感温度显示
         WeatherIcon = WeatherIconHelper.GetWeatherIcon(cache.ConditionText);
-        StatusMessage = string.Format(CacheTimeMessage, cache.CachedAt.ToString("HH:mm:ss"));
+        StatusMessage = string.Format(CacheTimeMessage, cache.CachedAtFormatted);
         CurrentCity = cache.CityName;
 
         // 更新湿度标签
@@ -343,6 +386,11 @@ public partial class MainViewModel : ViewModelBase
             if (cachedData != null)
             {
                 UpdateWeatherInfoFromCache(cachedData);
+                // 添加缓存过期提示
+                if (cachedData.IsExpired(10))
+                {
+                    StatusMessage += " (数据已过期)";
+                }
             }
             else
             {

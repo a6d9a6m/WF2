@@ -149,8 +149,7 @@
 
     <ScrollViewer>
         <StackPanel Margin="20" Spacing="15">
-            <Grid ColumnDefinitions="*,Auto">
-                <StackPanel Grid.Column="0">
+                <StackPanel>
                     <TextBlock Text="{Binding Title}"
                               Classes="title"/>
 
@@ -158,15 +157,6 @@
                               Classes="subtitle"
                               Margin="0,5,0,0"/>
                 </StackPanel>
-
-                <Button Grid.Column="1"
-                       Content="{Binding RefreshButton, StringFormat='🔄 {0}'}"
-                       Command="{Binding RefreshCitiesCommand}"
-                       Classes="refresh"
-                       IsEnabled="{Binding !IsLoading}"
-                       VerticalAlignment="Center"
-                       Cursor="Hand"/>
-            </Grid>
 
             <!-- 城市列表 -->
             <Border Classes="card">

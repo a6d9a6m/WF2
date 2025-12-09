@@ -146,14 +146,10 @@
           "Avalonia.Themes.Simple": "11.3.4"
         },
         "compile": {
-          "lib/net8.0/Avalonia.Diagnostics.dll": {
-            "related": ".xml"
-          }
+          "lib/net8.0/Avalonia.Diagnostics.dll": {}
         },
         "runtime": {
-          "lib/net8.0/Avalonia.Diagnostics.dll": {
-            "related": ".xml"
-          }
+          "lib/net8.0/Avalonia.Diagnostics.dll": {}
         }
       },
       "Avalonia.Fonts.Inter/11.3.4": {

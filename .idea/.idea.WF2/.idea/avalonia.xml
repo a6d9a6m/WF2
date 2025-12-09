@@ -5,6 +5,8 @@
       <map>
         <entry key="WF/Views/MainWindow.axaml" value="WF/WF.csproj" />
         <entry key="WF2/App.axaml" value="WF2/WF2.csproj" />
+        <entry key="WF2/Assets/Background.axaml" value="WF2/WF2.csproj" />
+        <entry key="WF2/Assets/Icons.axaml" value="WF2/WF2.csproj" />
         <entry key="WF2/Views/AboutView.axaml" value="WF2/WF2.csproj" />
         <entry key="WF2/Views/CitiesView.axaml" value="WF2/WF2.csproj" />
         <entry key="WF2/Views/InitializationView.axaml" value="WF2/WF2.csproj" />

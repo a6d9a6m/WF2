@@ -11,3 +11,4 @@ D:\CCY\Code\C#\rider\AvaioniaMvvm\WF2\WF2.Library\obj\Debug\net9.0\WF2.Library.d
 D:\CCY\Code\C#\rider\AvaioniaMvvm\WF2\WF2.Library\obj\Debug\net9.0\refint\WF2.Library.dll
 D:\CCY\Code\C#\rider\AvaioniaMvvm\WF2\WF2.Library\obj\Debug\net9.0\WF2.Library.pdb
 D:\CCY\Code\C#\rider\AvaioniaMvvm\WF2\WF2.Library\obj\Debug\net9.0\ref\WF2.Library.dll
+D:\CCY\Code\C#\rider\AvaioniaMvvm\WF2\WF2.Library\obj\Debug\net9.0\WF2.Library.sourcelink.json

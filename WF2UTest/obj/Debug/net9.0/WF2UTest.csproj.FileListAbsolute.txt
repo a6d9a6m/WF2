@@ -195,3 +195,4 @@ D:\CCY\Code\C#\rider\AvaioniaMvvm\WF2\WF2UTest\bin\Debug\net9.0\Microsoft.Extens
 D:\CCY\Code\C#\rider\AvaioniaMvvm\WF2\WF2UTest\bin\Debug\net9.0\Microsoft.Extensions.FileProviders.Abstractions.dll
 D:\CCY\Code\C#\rider\AvaioniaMvvm\WF2\WF2UTest\bin\Debug\net9.0\Microsoft.Extensions.FileProviders.Physical.dll
 D:\CCY\Code\C#\rider\AvaioniaMvvm\WF2\WF2UTest\bin\Debug\net9.0\Microsoft.Extensions.FileSystemGlobbing.dll
+D:\CCY\Code\C#\rider\AvaioniaMvvm\WF2\WF2UTest\obj\Debug\net9.0\WF2UTest.sourcelink.json

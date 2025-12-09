@@ -13,7 +13,7 @@ namespace WF2;
 public class ServiceLocator
 {
     private readonly IServiceProvider _serviceProvider;
-    
+
     private static ServiceLocator? _current;
 
     public static ServiceLocator Current
@@ -24,7 +24,7 @@ public class ServiceLocator
             {
                 return _current;
             }
-            if (Application.Current!.TryGetResource(nameof(ServiceLocator), out var resource) 
+            if (Application.Current!.TryGetResource(nameof(ServiceLocator), out var resource)
                 && resource is ServiceLocator serviceLocator)
             {
                 return serviceLocator;
@@ -35,13 +35,13 @@ public class ServiceLocator
     }
     public MainWindowViewModel MainWindowViewModel =>
         _serviceProvider.GetRequiredService<MainWindowViewModel>();
-    
+
     public InitializationViewModel InitializationViewModel =>
         _serviceProvider.GetRequiredService<InitializationViewModel>();
-    
+
     public IRootNavigationService RootNavigationService =>
         _serviceProvider.GetRequiredService<IRootNavigationService>();
-    
+
     public MainViewModel MainViewModel =>
         _serviceProvider.GetRequiredService<MainViewModel>();
 
@@ -84,7 +84,7 @@ public class ServiceLocator
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .Build();
-        
+
         serviceCollection.AddSingleton<IConfiguration>(configuration);
 
         serviceCollection.AddSingleton<MainWindowViewModel>();

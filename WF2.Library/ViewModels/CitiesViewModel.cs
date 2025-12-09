@@ -19,9 +19,6 @@ public partial class CitiesViewModel : ViewModelBase
     private string _subtitle = "管理你关注的城市天气";
     
     [ObservableProperty]
-    private string _refreshButton = "刷新列表";
-    
-    [ObservableProperty]
     private string _savedCitiesLabel = "已保存的城市";
     
     [ObservableProperty]
@@ -88,7 +85,6 @@ public partial class CitiesViewModel : ViewModelBase
     {
         Title = _localizationService.GetString("CityManagement");
         Subtitle = _localizationService.GetString("ManageCities");
-        RefreshButton = _localizationService.GetString("RefreshList");
         SavedCitiesLabel = _localizationService.GetString("SavedCities");
         DeleteButton = _localizationService.GetString("Delete");
         NoCitiesMessage = _localizationService.GetString("NoSavedCities");
@@ -138,8 +134,8 @@ public partial class CitiesViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
-    private async Task RefreshCitiesAsync()
+    // 页面切换时自动刷新
+    public async Task OnPageActivatedAsync()
     {
         await LoadCitiesAsync();
     }

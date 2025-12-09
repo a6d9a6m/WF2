@@ -115,9 +115,6 @@ public partial class WeatherDetailViewModel : ViewModelBase
     private string _feelsLikeLabel = "体感温度";
 
     [ObservableProperty]
-    private string _refreshButton = "刷新";
-
-    [ObservableProperty]
     private string _loadingMessage = "正在加载详细天气信息...";
 
     [ObservableProperty]
@@ -189,7 +186,6 @@ public partial class WeatherDetailViewModel : ViewModelBase
         UvIndexLabel = _localizationService.GetString("UvIndex");
         CloudLabel = _localizationService.GetString("Cloud");
         FeelsLikeLabel = _localizationService.GetString("FeelsLike");
-        RefreshButton = _localizationService.GetString("Refresh");
         LoadingMessage = _localizationService.GetString("LoadingWeatherDetail");
         ShowingDataMessage = _localizationService.GetString("ShowingData");
         LastUpdateMessage = _localizationService.GetString("LastUpdate");
@@ -370,19 +366,14 @@ public partial class WeatherDetailViewModel : ViewModelBase
 
             if (cachedData != null)
             {
-                LocationName = $"{cachedData.LocationName}, {cachedData.Country}";
-                Temperature = $"{cachedData.Temperature:F1}°C";
-                ConditionText = cachedData.ConditionText;
-                Humidity = $"{cachedData.Humidity}%";
-                WindKph = cachedData.WindKph;
-                WeatherIcon = WeatherIconHelper.GetWeatherIcon(cachedData.ConditionText);
+                UpdateWeatherDetailFromCache(cachedData);
                 StatusMessage = CacheDataMessage;
                 
-                // 更新体感温度显示
-                FeelsLike = $"{FeelsLikeLabel} {Temperature}";
-                
-                // 更新湿度标签
-                UpdateHumidityLabel();
+                // 缓存过期提示
+                if (cachedData.IsExpired(10))
+                {
+                    StatusMessage += " (数据已过期)";
+                }
             }
             else
             {
@@ -396,10 +387,48 @@ public partial class WeatherDetailViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand]
-    private async Task RefreshWeatherAsync()
+    // 页面切换时自动刷新
+    public async Task OnPageActivatedAsync()
     {
-        await LoadWeatherDetailAsync();
+        // 检查是否有10分钟内的有效缓存
+        var validCache = await _cacheService.GetValidWeatherAsync(CityName, 10);
+        
+        if (validCache != null)
+        {
+            // 使用有效缓存
+            UpdateWeatherDetailFromCache(validCache);
+            StatusMessage = $"显示缓存数据 (更新于: {validCache.CachedAtFormatted})";
+            Console.WriteLine($"[INFO] 使用有效缓存数据，城市: {CityName}");
+        }
+        else
+        {
+            // 获取最新数据
+            await LoadWeatherDetailAsync();
+            Console.WriteLine($"[INFO] 获取最新天气数据，城市: {CityName}");
+        }
+    }
+    
+    // 从缓存更新天气详情
+    private void UpdateWeatherDetailFromCache(WeatherCache cache)
+    {
+        LocationName = $"{cache.LocationName}, {cache.Country}";
+        Temperature = $"{cache.Temperature:F1}°C";
+        ConditionText = cache.ConditionText;
+        Humidity = $"{cache.Humidity}%";
+        WindKph = cache.WindKph;
+        WindDirection = cache.WindDirection ?? "--";
+        PressureMb = cache.PressureMb;
+        VisibilityKm = cache.VisibilityKm;
+        UvIndex = cache.UvIndex;
+        Cloud = cache.Cloud;
+        FeelsLike = $"{cache.Temperature:F1}°C";
+        WeatherIcon = WeatherIconHelper.GetWeatherIcon(cache.ConditionText);
+        
+        // 更新体感温度显示
+        FeelsLike = $"{FeelsLikeLabel} {Temperature}";
+        
+        // 更新湿度标签
+        UpdateHumidityLabel();
     }
 
     [RelayCommand]

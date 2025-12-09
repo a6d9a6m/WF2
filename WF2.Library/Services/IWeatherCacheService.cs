@@ -6,6 +6,7 @@ public interface IWeatherCacheService
 {
     Task SaveWeatherAsync(WeatherCache weather);
     Task<WeatherCache?> GetWeatherAsync(string cityName);
+    Task<WeatherCache?> GetValidWeatherAsync(string cityName, int expirationMinutes = 10);
     Task<List<string>> GetAllCitiesAsync();
     Task<List<WeatherCache>> GetFavoriteCitiesAsync();
     Task UpdateFavoriteStatusAsync(string cityName, bool isFavorite);

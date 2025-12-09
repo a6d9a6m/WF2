@@ -146,14 +146,10 @@
           "Avalonia.Themes.Simple": "11.3.4"
         },
         "compile": {
-          "lib/net8.0/Avalonia.Diagnostics.dll": {
-            "related": ".xml"
-          }
+          "lib/net8.0/Avalonia.Diagnostics.dll": {}
         },
         "runtime": {
-          "lib/net8.0/Avalonia.Diagnostics.dll": {
-            "related": ".xml"
-          }
+          "lib/net8.0/Avalonia.Diagnostics.dll": {}
         }
       },
       "Avalonia.Fonts.Inter/11.3.4": {
@@ -3915,6 +3911,7 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
+      "Microsoft.Extensions.Configuration >= 9.0.10",
       "Microsoft.NET.Test.Sdk >= 17.12.0",
       "Moq >= 4.20.70",
       "NUnit >= 3.14.0",
@@ -3975,6 +3972,10 @@
       "net9.0": {
         "targetAlias": "net9.0",
         "dependencies": {
+          "Microsoft.Extensions.Configuration": {
+            "target": "Package",
+            "version": "[9.0.10, )"
+          },
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
             "version": "[17.12.0, )"
