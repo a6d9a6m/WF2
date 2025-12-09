@@ -186,6 +186,12 @@ public partial class CitiesViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
+    private async Task RefreshCitiesAsync()
+    {
+        await LoadCitiesAsync();
+    }
+
     // 更新语言
     public async Task UpdateLanguageAsync(string language)
     {

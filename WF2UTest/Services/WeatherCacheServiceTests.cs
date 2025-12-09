@@ -15,7 +15,7 @@ public class WeatherCacheServiceTests
     {
         // 使用临时数据库文件进行测试
         _testDbPath = Path.Combine(Path.GetTempPath(), $"test_cache_{Guid.NewGuid()}.db");
-        _cacheService = new WeatherCacheService();
+        _cacheService = new WeatherCacheService($"Filename={_testDbPath};Connection=shared");
     }
 
     [TearDown]
@@ -30,6 +30,7 @@ public class WeatherCacheServiceTests
 
     private WeatherCache CreateTestWeatherCache(string cityName, bool isFavorite = false)
     {
+        var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         return new WeatherCache
         {
             CityName = cityName,
@@ -41,8 +42,8 @@ public class WeatherCacheServiceTests
             Humidity = 60,
             WindKph = 10.5,
             FeelsLikeC = 26.0,
-            LastUpdated = DateTime.Now,
-            CachedAt = DateTime.Now,
+            LastUpdated = now,
+            CachedAt = now,
             IsFavorite = isFavorite
         };
     }
@@ -184,7 +185,7 @@ public class WeatherCacheServiceTests
     }
 
     [Test]
-    public async Task WeatherCache_FromApiResponse_ShouldCreateValidCache()
+    public void WeatherCache_FromApiResponse_ShouldCreateValidCache()
     {
         // Arrange
         var apiResponse = new WeatherApiResponse
@@ -223,7 +224,6 @@ public class WeatherCacheServiceTests
 
         // Act
         var cache = WeatherCache.FromApiResponse(apiResponse);
-        await Task.Delay(100); // 等待异步操作完成
 
         // Assert
         Assert.That(cache.CityName, Is.EqualTo("TestCity"));

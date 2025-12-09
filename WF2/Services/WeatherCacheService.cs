@@ -6,12 +6,23 @@ namespace WF2.Services;
 
 public class WeatherCacheService : IWeatherCacheService
 {
-    private const string DatabasePath = "Filename=weather.db;Connection=shared";
+    private readonly string _databasePath;
     private const string CollectionName = "weather_cache";
+
+    // 默认构造函数，使用默认数据库路径
+    public WeatherCacheService() : this("Filename=weather.db;Connection=shared")
+    {
+    }
+
+    // 支持自定义数据库路径的构造函数，主要用于测试
+    public WeatherCacheService(string databasePath)
+    {
+        _databasePath = databasePath;
+    }
 
     private LiteDatabase GetDatabase()
     {
-        return new LiteDatabase(DatabasePath);
+        return new LiteDatabase(_databasePath);
     }
 
     public Task MigrateDatabaseAsync()

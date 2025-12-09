@@ -140,7 +140,7 @@ public class WeatherDetailViewModelTests
     }
 
     [Test]
-    public async Task ShowToastMessage_ShouldDisplayToastFor3Seconds()
+    public void ShowToastMessage_ShouldDisplayToastFor3Seconds()
     {
         // Arrange
         string message = "Test Message";
@@ -148,9 +148,6 @@ public class WeatherDetailViewModelTests
         // Act - 调用显示Toast的私有方法（通过公共方法触发）
         _viewModel.ToastMessage = message;
         _viewModel.ShowToast = true;
-
-        // 等待一段时间确保Toast显示
-        await Task.Delay(100);
 
         // Assert
         Assert.That(_viewModel.ShowToast, Is.True);
@@ -189,7 +186,6 @@ public class WeatherDetailViewModelTests
 
         // Act
         await _viewModel.UpdateLanguageAsync(newLanguage);
-        await Task.Delay(100); // 等待异步操作完成
 
         // Assert
         _mockLocalizationService.Verify(x => x.SetLanguage(newLanguage), Times.Once);

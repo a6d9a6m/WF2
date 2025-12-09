@@ -520,6 +520,21 @@ public partial class WeatherDetailViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
+    private async Task RefreshWeatherAsync()
+    {
+        try
+        {
+            await CheckFavoriteStatusAsync();
+            await LoadWeatherDetailAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[ERROR] 刷新天气数据失败: {ex.Message}");
+            StatusMessage = $"刷新失败: {ex.Message}";
+        }
+    }
+
     // 设置城市名称
     public void SetCityName(string cityName)
     {

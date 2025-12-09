@@ -145,7 +145,6 @@ public class CitiesViewModelTests
 
         // Act
         await _viewModel.UpdateLanguageAsync(newLanguage);
-        await Task.Delay(100); // 等待异步操作完成
 
         // Assert
         _mockLocalizationService.Verify(x => x.SetLanguage(newLanguage), Times.Once);
@@ -153,7 +152,7 @@ public class CitiesViewModelTests
     }
 
     [Test]
-    public void StatusMessage_ShouldUpdateAfterCitiesLoad()
+    public async Task StatusMessage_ShouldUpdateAfterCitiesLoad()
     {
         // Arrange
         var cities = new List<WeatherCache>
@@ -165,7 +164,7 @@ public class CitiesViewModelTests
         _mockCacheService.Setup(x => x.GetFavoriteCitiesAsync()).ReturnsAsync(cities);
 
         // Act - 等待加载
-        Task.Delay(500).Wait();
+        await Task.Delay(500);
 
         // Assert - 状态消息应该显示已加载的城市数量
         // 在实际实现中验证 StatusMessage 属性
