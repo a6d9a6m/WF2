@@ -1,8 +1,8 @@
 using LiteDB;
 using WF2.Library.Models;
-using WF2.Library.Services;
+using WF2.Library.Interfaces;
 
-namespace WF2.Services;
+namespace WF2.Library.Services;
 
 public class WeatherCacheService : IWeatherCacheService
 {
