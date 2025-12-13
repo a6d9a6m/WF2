@@ -31,22 +31,31 @@
         </Style>
         
         <Style Selector="Border.card">
-            <Setter Property="Background" Value="#F5F5F5"/>
-            <Setter Property="Opacity" Value="0.7"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Opacity" Value="0.9"/>
         </Style>
-        
+
         <Style Selector="Border.card.dark">
-            <Setter Property="Background" Value="#3c3c3c"/>
-            <Setter Property="Opacity" Value="0.7"/>
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Opacity" Value="0.9"/>
         </Style>
         
         <Style Selector="TextBox.search">
-            <Setter Property="Background" Value="White"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="#212121"/>
         </Style>
-        
+
         <Style Selector="TextBox.search.dark">
-            <Setter Property="Background" Value="#3c3c3c"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#2C2C2C"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="TextBlock.weather-info">
+            <Setter Property="Foreground" Value="#212121"/>
+        </Style>
+
+        <Style Selector="TextBlock.weather-info.dark">
+            <Setter Property="Foreground" Value="#E0E0E0"/>
         </Style>
     </UserControl.Styles>
 
@@ -95,20 +104,21 @@
                           FontSize="26"
                           FontWeight="SemiBold"
                           HorizontalAlignment="Center"
-                          Foreground="#1A1A1A"/>
+                          Classes="weather-info"/>
 
                 <!-- 温度显示 -->
                 <TextBlock Text="{Binding Temperature}"
                           FontSize="64"
                           FontWeight="Light"
                           HorizontalAlignment="Center"
-                          Foreground="#2196F3"/>
+                          Foreground="#1976D2"/>
 
                 <!-- 天气状况 -->
                 <TextBlock Text="{Binding ConditionText}"
                           FontSize="20"
                           HorizontalAlignment="Center"
-                          Foreground="#666666"/>
+                          Classes="weather-info"
+                          Opacity="0.7"/>
 
                 <!-- 详细信息 -->
                 <Grid ColumnDefinitions="*,*" Margin="0,10,0,0">
@@ -120,7 +130,7 @@
                                   FontSize="14"
                                   FontWeight="Medium"
                                   HorizontalAlignment="Center"
-                                  Foreground="#424242"
+                                  Classes="weather-info"
                                   TextAlignment="Center"/>
                     </StackPanel>
 
@@ -132,7 +142,7 @@
                                   FontSize="14"
                                   FontWeight="Medium"
                                   HorizontalAlignment="Center"
-                                  Foreground="#424242"
+                                  Classes="weather-info"
                                   TextAlignment="Center"/>
                     </StackPanel>
                 </Grid>
