@@ -139,7 +139,7 @@ public class SettingsService : ISettingsService
             using var db = new LiteDatabase(DatabasePath);
             var collection = db.GetCollection<BsonDocument>(SettingsCollectionName);
             var doc = collection.FindOne(d => d["Key"] == "BackgroundImagePath");
-            return doc?["Value"].AsString ?? "avares://WF2/Assets/Background.axaml"; // 默认背景
+            return doc?["Value"].AsString ?? "avares://WF2/Assets/default-background.jpg"; // 默认背景
         });
     }
 

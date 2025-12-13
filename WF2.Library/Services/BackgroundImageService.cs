@@ -52,9 +52,10 @@ namespace WF2.Library.Services
             {
                 Console.WriteLine("[DEBUG] 开始获取背景图片路径...");
 
-                // 首先尝试获取用户设置的背景图片
+                // 首先尝试获取用户设置的背景图片（排除默认背景）
                 var customBackgroundPath = await _settingsService.GetBackgroundImagePathAsync();
-                if (!string.IsNullOrEmpty(customBackgroundPath) && (File.Exists(customBackgroundPath) || customBackgroundPath.StartsWith("avares://")))
+                var defaultPath = GetDefaultBackgroundPath();
+                if (!string.IsNullOrEmpty(customBackgroundPath) && customBackgroundPath != defaultPath && File.Exists(customBackgroundPath))
                 {
                     Console.WriteLine($"[DEBUG] 使用自定义背景图片: {customBackgroundPath}");
                     await SaveLastUsedImagePathAsync(customBackgroundPath);

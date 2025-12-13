@@ -150,8 +150,7 @@ public class WeatherCacheServiceTests
     public async Task UpdateFavoriteStatusAsync_WithNonExistentCity_ShouldNotThrowException()
     {
         // Act & Assert
-        Assert.DoesNotThrowAsync(async () =>
-            await _cacheService.UpdateFavoriteStatusAsync("NonExistent", true));
+        await _cacheService.UpdateFavoriteStatusAsync("NonExistent", true);
     }
 
     [Test]

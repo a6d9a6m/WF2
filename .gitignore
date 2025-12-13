@@ -70,8 +70,14 @@ TestResults/
 # Ignore specific files
 [Dd]S_Store
 Thumbs.db
+*.db
 *.db-shm
 *.db-wal
+
+# Ignore Rider files
+*.sln.iml
+rider.project.model.nuget.info
+rider.project.restore.info
 
 # Ignore Avalonia specific
 avalonia-ui/

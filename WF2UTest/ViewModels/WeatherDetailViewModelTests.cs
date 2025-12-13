@@ -88,7 +88,7 @@ public class WeatherDetailViewModelTests
     }
 
     [Test]
-    public async Task SearchCityAsync_WithValidCity_ShouldLoadWeatherData()
+    public void SearchCityAsync_WithValidCity_ShouldLoadWeatherData()
     {
         // Arrange
         _viewModel.SearchCityInput = "Shenzhen";
@@ -115,7 +115,7 @@ public class WeatherDetailViewModelTests
     }
 
     [Test]
-    public async Task LoadCachedWeather_ShouldLoadFromCache()
+    public void LoadCachedWeather_ShouldLoadFromCache()
     {
         // Arrange
         var cachedWeather = new WeatherCache

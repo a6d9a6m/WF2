@@ -122,7 +122,7 @@ public class PexelsService : IPexelsService, IDisposable
             // 发送请求 - 使用Authorization头
             string url = $"{BaseUrl}/search?query={Uri.EscapeDataString(query)}&per_page=1";
             _httpClient.DefaultRequestHeaders.Clear();
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _accessKey);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", _accessKey);
             
             Console.WriteLine($"[DEBUG] PexelsService.GetWeatherBackgroundImageAsync: 正在请求Pexels天气图片: {url}");
             Console.WriteLine($"[DEBUG] PexelsService.GetWeatherBackgroundImageAsync: 使用API密钥: {_accessKey?.Substring(0, Math.Min(10, _accessKey?.Length ?? 0))}...");

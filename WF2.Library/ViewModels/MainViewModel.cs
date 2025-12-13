@@ -5,17 +5,18 @@ using WF2.Library.Helpers;
 using WF2.Library.Models;
 using WF2.Library.Services;
 using WF2.Library.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace WF2.Library.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    private const string ApiKey = "8217d39470034d9889e112743252410";
     private const string ApiBaseUrl = "http://api.weatherapi.com/v1/current.json";
     private readonly IWeatherCacheService _cacheService;
     private readonly ISettingsService _settingsService;
     private readonly ILocalizationService _localizationService;
     private readonly IBackgroundImageService _backgroundImageService;
+    private readonly IConfiguration _configuration;
 
     private ViewModelBase? _content;
 
@@ -128,12 +129,13 @@ public partial class MainViewModel : ViewModelBase
     private string _backgroundImagePath = string.Empty;
 
     public MainViewModel(IWeatherCacheService cacheService, ISettingsService settingsService,
-        ILocalizationService localizationService, IBackgroundImageService backgroundImageService)
+        ILocalizationService localizationService, IBackgroundImageService backgroundImageService, IConfiguration configuration)
     {
         _cacheService = cacheService;
         _settingsService = settingsService;
         _localizationService = localizationService;
         _backgroundImageService = backgroundImageService;
+        _configuration = configuration;
 
         // 订阅语言变更事件
         _localizationService.LanguageChanged += (sender, e) => UpdateUIText();
@@ -253,9 +255,12 @@ public partial class MainViewModel : ViewModelBase
 
         try
         {
+            // 从配置中获取API密钥
+            var apiKey = _configuration["WeatherApi:ApiKey"] ?? throw new InvalidOperationException("Weather API key not configured");
+            
             //构建请求 URL
-            var requestUrl = $"{ApiBaseUrl}?key={ApiKey}&q={cityName}&aqi=no";
-            Console.WriteLine($"正在查询天气: {requestUrl}");
+            var requestUrl = $"{ApiBaseUrl}?key={apiKey}&q={cityName}&aqi=no";
+            Console.WriteLine($"正在查询天气: {ApiBaseUrl}?key=***&q={cityName}&aqi=no");
 
             //发起 GET 请求
             HttpResponseMessage response = await httpClient.GetAsync(requestUrl);

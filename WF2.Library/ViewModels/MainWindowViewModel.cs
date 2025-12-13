@@ -60,9 +60,12 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         UseDarkTheme = await _settingsService.GetUseDarkThemeAsync();
         SelectedLanguage = await _settingsService.GetSelectedLanguageAsync();
-        
+
         // 设置本地化服务的语言
         _localizationService.SetLanguage(SelectedLanguage);
+
+        // 初始化UI文本
+        UpdateUIText();
     }
 
     private void UpdateUIText()

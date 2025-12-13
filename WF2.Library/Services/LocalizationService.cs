@@ -69,13 +69,20 @@ namespace WF2.Library.Services
         {
             // 主界面
             _translations["AppTitle"] = "天气预报助手";
+            _translations["WeatherAssistant"] = "天气预报助手";
+            _translations["NavigationMenu"] = "导航菜单";
+            _translations["WeatherHome"] = "天气首页";
+            _translations["WeatherForecast"] = "天气预报";
+            _translations["RealTimeWeatherQuerySystem"] = "实时天气查询系统";
             _translations["Greeting"] = "欢迎使用天气助手";
             _translations["RealTimeWeatherSystem"] = "实时天气查询系统";
             _translations["SearchCityPlaceholder"] = "输入城市名称（中文或英文）";
+            _translations["EnterCityName"] = "输入城市名称（中文或英文）";
             _translations["Search"] = "搜索";
             _translations["SearchCity"] = "搜索城市";
             _translations["CurrentCity"] = "当前城市";
-            _translations["LastUpdate"] = "最后更新";
+            _translations["LastUpdate"] = "最后更新: {0}";
+            _translations["CacheTime"] = "缓存时间: {0}（离线模式）";
             _translations["MinutesAgo"] = "分钟前";
             _translations["Now"] = "现在";
             _translations["Temperature"] = "温度";
@@ -88,17 +95,28 @@ namespace WF2.Library.Services
             _translations["Visibility"] = "能见度";
             _translations["UVIndex"] = "紫外线指数";
             _translations["Refresh"] = "刷新";
+            _translations["RefreshWeather"] = "刷新天气";
             _translations["DetailedWeather"] = "详细天气";
             _translations["CityManagement"] = "城市管理";
             _translations["Settings"] = "设置";
             _translations["About"] = "关于";
             _translations["PleaseEnterCityName"] = "请输入城市名称";
+            _translations["Initializing"] = "正在初始化...";
+            _translations["RefreshingWeather"] = "正在刷新天气...";
+            _translations["SearchingWeather"] = "正在查询 {0} 的天气...";
+            _translations["RefreshFailed"] = "刷新失败: {0}";
+            _translations["SearchFailed"] = "查询失败: {0}";
             _translations["QueryingWeather"] = "正在查询 {0} 的天气...";
             _translations["QueryFailed"] = "查询失败: {0}";
+            _translations["RequestTimeout"] = "请求超时，请检查网络";
+            _translations["NetworkRequestFailed"] = "网络请求失败";
+            _translations["DataParsingFailed"] = "数据解析失败";
             _translations["NetworkErrorTryCache"] = "网络请求失败，尝试加载缓存";
             _translations["NoWeatherData"] = "暂无天气数据";
             _translations["WeatherDataUpdated"] = "天气数据已更新";
-            
+            _translations["NoCacheData"] = "暂无缓存数据。";
+            _translations["LoadCacheFailed"] = "加载缓存失败。";
+
             // 城市管理界面
             _translations["SavedCities"] = "已保存的城市";
             _translations["NoSavedCities"] = "暂无保存的城市";
@@ -114,7 +132,7 @@ namespace WF2.Library.Services
             _translations["CitiesLoaded"] = "已加载 {0} 个城市";
             _translations["DeleteFailed"] = "删除城市失败: {0}";
             _translations["SelectFailed"] = "选择失败: {0}";
-            
+
             // 设置界面
             _translations["Appearance"] = "外观";
             _translations["DarkMode"] = "深色模式";
@@ -126,7 +144,7 @@ namespace WF2.Library.Services
             _translations["DarkThemeSaved"] = "深色主题设置已保存: {0}";
             _translations["LanguageSaved"] = "语言设置已保存: {0}";
             _translations["SaveSettingsFailed"] = "保存设置失败";
-            
+
             // 关于界面
             _translations["AppName"] = "天气预报助手";
             _translations["Version"] = "v1.0.0";
@@ -142,20 +160,17 @@ namespace WF2.Library.Services
             _translations["DotNet"] = ".NET 9.0";
             _translations["MVVMPattern"] = "MVVM 架构模式";
             _translations["Copyright"] = "© 2024 天气预报助手. All rights reserved.";
-            
+
             // 初始化界面
-            _translations["Initializing"] = "天气预报助手";
             _translations["InitializingApp"] = "正在初始化应用...";
             _translations["LoadingResources"] = "正在加载资源，请稍候...";
-            
+
             // 天气详情界面
             _translations["WeatherDetail"] = "天气详情";
             _translations["LoadingWeatherDetail"] = "正在加载详细天气信息...";
             _translations["ShowingData"] = "显示 {0} 的天气数据";
             _translations["LoadFailed"] = "加载失败: {0}";
             _translations["CacheData"] = "显示缓存数据（离线模式）";
-            _translations["NoCacheData"] = "暂无缓存数据";
-            _translations["LoadCacheFailed"] = "加载缓存失败";
             _translations["Tip"] = "提示";
             _translations["Tip1"] = "• 数据来源于 WeatherAPI.com";
             _translations["Tip2"] = "• 点击刷新按钮获取最新天气数据";
@@ -167,13 +182,20 @@ namespace WF2.Library.Services
         {
             // Main interface
             _translations["AppTitle"] = "Weather Forecast Assistant";
+            _translations["WeatherAssistant"] = "Weather Forecast Assistant";
+            _translations["NavigationMenu"] = "Navigation Menu";
+            _translations["WeatherHome"] = "Weather Home";
+            _translations["WeatherForecast"] = "Weather Forecast";
+            _translations["RealTimeWeatherQuerySystem"] = "Real-time Weather Query System";
             _translations["Greeting"] = "Welcome to Weather Assistant";
             _translations["RealTimeWeatherSystem"] = "Real-time Weather Query System";
             _translations["SearchCityPlaceholder"] = "Enter city name (Chinese or English)";
+            _translations["EnterCityName"] = "Enter city name (Chinese or English)";
             _translations["Search"] = "Search";
             _translations["SearchCity"] = "Search City";
             _translations["CurrentCity"] = "Current City";
-            _translations["LastUpdate"] = "Last Update";
+            _translations["LastUpdate"] = "Last Update: {0}";
+            _translations["CacheTime"] = "Cache Time: {0} (Offline Mode)";
             _translations["MinutesAgo"] = "minutes ago";
             _translations["Now"] = "Now";
             _translations["Temperature"] = "Temperature";
@@ -186,17 +208,28 @@ namespace WF2.Library.Services
             _translations["Visibility"] = "Visibility";
             _translations["UVIndex"] = "UV Index";
             _translations["Refresh"] = "Refresh";
+            _translations["RefreshWeather"] = "Refresh Weather";
             _translations["DetailedWeather"] = "Detailed Weather";
             _translations["CityManagement"] = "City Management";
             _translations["Settings"] = "Settings";
             _translations["About"] = "About";
             _translations["PleaseEnterCityName"] = "Please enter city name";
+            _translations["Initializing"] = "Initializing...";
+            _translations["RefreshingWeather"] = "Refreshing weather...";
+            _translations["SearchingWeather"] = "Searching weather for {0}...";
+            _translations["RefreshFailed"] = "Refresh failed: {0}";
+            _translations["SearchFailed"] = "Search failed: {0}";
             _translations["QueryingWeather"] = "Querying weather for {0}...";
             _translations["QueryFailed"] = "Query failed: {0}";
+            _translations["RequestTimeout"] = "Request timeout, please check network";
+            _translations["NetworkRequestFailed"] = "Network request failed";
+            _translations["DataParsingFailed"] = "Data parsing failed";
             _translations["NetworkErrorTryCache"] = "Network request failed, trying to load cache";
             _translations["NoWeatherData"] = "No weather data available";
             _translations["WeatherDataUpdated"] = "Weather data updated";
-            
+            _translations["NoCacheData"] = "No cache data available.";
+            _translations["LoadCacheFailed"] = "Failed to load cache.";
+
             // City management interface
             _translations["SavedCities"] = "Saved Cities";
             _translations["NoSavedCities"] = "No saved cities";
@@ -212,7 +245,7 @@ namespace WF2.Library.Services
             _translations["CitiesLoaded"] = "Loaded {0} cities";
             _translations["DeleteFailed"] = "Failed to delete city: {0}";
             _translations["SelectFailed"] = "Selection failed: {0}";
-            
+
             // Settings interface
             _translations["Appearance"] = "Appearance";
             _translations["DarkMode"] = "Dark Mode";
@@ -224,7 +257,7 @@ namespace WF2.Library.Services
             _translations["DarkThemeSaved"] = "Dark theme setting saved: {0}";
             _translations["LanguageSaved"] = "Language setting saved: {0}";
             _translations["SaveSettingsFailed"] = "Failed to save settings";
-            
+
             // About interface
             _translations["AppName"] = "Weather Forecast Assistant";
             _translations["Version"] = "v1.0.0";
@@ -240,20 +273,17 @@ namespace WF2.Library.Services
             _translations["DotNet"] = ".NET 9.0";
             _translations["MVVMPattern"] = "MVVM Architecture Pattern";
             _translations["Copyright"] = "© 2024 Weather Forecast Assistant. All rights reserved.";
-            
+
             // Initialization interface
-            _translations["Initializing"] = "Weather Forecast Assistant";
             _translations["InitializingApp"] = "Initializing application...";
             _translations["LoadingResources"] = "Loading resources, please wait...";
-            
+
             // Weather detail interface
             _translations["WeatherDetail"] = "Weather Detail";
             _translations["LoadingWeatherDetail"] = "Loading detailed weather information...";
             _translations["ShowingData"] = "Showing weather data for {0}";
             _translations["LoadFailed"] = "Load failed: {0}";
             _translations["CacheData"] = "Showing cached data (offline mode)";
-            _translations["NoCacheData"] = "No cached data available";
-            _translations["LoadCacheFailed"] = "Failed to load cache";
             _translations["Tip"] = "Tips";
             _translations["Tip1"] = "• Data source from WeatherAPI.com";
             _translations["Tip2"] = "• Click refresh button to get latest weather data";

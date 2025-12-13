@@ -114,7 +114,7 @@ public class CitiesViewModelTests
     }
 
     [Test]
-    public async Task LoadCities_ShouldHandleError_Gracefully()
+    public void LoadCities_ShouldHandleError_Gracefully()
     {
         // Arrange
         _mockCacheService.Setup(x => x.GetFavoriteCitiesAsync())

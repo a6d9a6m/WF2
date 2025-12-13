@@ -74,9 +74,18 @@ public class WeatherCacheService : IWeatherCacheService
     {
         return Task.Run<WeatherCache?>(() =>
         {
-            using var db = GetDatabase();
-            var collection = db.GetCollection<WeatherCache>(CollectionName);
-            return collection.FindOne(x => x.CityName == cityName);
+            try
+            {
+                using var db = GetDatabase();
+                var collection = db.GetCollection<WeatherCache>(CollectionName);
+                return collection.FindOne(x => x.CityName == cityName);
+            }
+            catch (InvalidCastException)
+            {
+                // 数据库架构已更改，清理旧数据
+                MigrateDatabaseAsync().Wait();
+                return null;
+            }
         });
     }
 
@@ -84,17 +93,26 @@ public class WeatherCacheService : IWeatherCacheService
     {
         return Task.Run<WeatherCache?>(() =>
         {
-            using var db = GetDatabase();
-            var collection = db.GetCollection<WeatherCache>(CollectionName);
-            var cache = collection.FindOne(x => x.CityName == cityName);
-
-            // 检查缓存是否存在且未过期
-            if (cache != null && !cache.IsExpired(expirationMinutes))
+            try
             {
-                return cache;
-            }
+                using var db = GetDatabase();
+                var collection = db.GetCollection<WeatherCache>(CollectionName);
+                var cache = collection.FindOne(x => x.CityName == cityName);
 
-            return null;
+                // 检查缓存是否存在且未过期
+                if (cache != null && !cache.IsExpired(expirationMinutes))
+                {
+                    return cache;
+                }
+
+                return null;
+            }
+            catch (InvalidCastException)
+            {
+                // 数据库架构已更改，清理旧数据
+                MigrateDatabaseAsync().Wait();
+                return null;
+            }
         });
     }
 
@@ -102,9 +120,18 @@ public class WeatherCacheService : IWeatherCacheService
     {
         return Task.Run(() =>
         {
-            using var db = GetDatabase();
-            var collection = db.GetCollection<WeatherCache>(CollectionName);
-            return collection.FindAll().Select(x => x.CityName).OrderByDescending(x => x).ToList();
+            try
+            {
+                using var db = GetDatabase();
+                var collection = db.GetCollection<WeatherCache>(CollectionName);
+                return collection.FindAll().Select(x => x.CityName).OrderByDescending(x => x).ToList();
+            }
+            catch (InvalidCastException)
+            {
+                // 数据库架构已更改，清理旧数据
+                MigrateDatabaseAsync().Wait();
+                return new List<string>();
+            }
         });
     }
 
@@ -112,11 +139,20 @@ public class WeatherCacheService : IWeatherCacheService
     {
         return Task.Run(() =>
         {
-            using var db = GetDatabase();
-            var collection = db.GetCollection<WeatherCache>(CollectionName);
-            var result = collection.Find(x => x.IsFavorite).ToList();
-            // 确保返回空列表而不是null
-            return result ?? new List<WeatherCache>();
+            try
+            {
+                using var db = GetDatabase();
+                var collection = db.GetCollection<WeatherCache>(CollectionName);
+                var result = collection.Find(x => x.IsFavorite).ToList();
+                // 确保返回空列表而不是null
+                return result ?? new List<WeatherCache>();
+            }
+            catch (InvalidCastException)
+            {
+                // 数据库架构已更改，清理旧数据
+                MigrateDatabaseAsync().Wait();
+                return new List<WeatherCache>();
+            }
         });
     }
 

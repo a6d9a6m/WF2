@@ -3,6 +3,7 @@ using WF2.Library.Interfaces;
 using WF2.Library.Services;
 using WF2.Library.Models;
 using WF2.Library.ViewModels;
+using Microsoft.Extensions.Configuration;
 
 namespace WF2UTest.ViewModels;
 
@@ -13,6 +14,7 @@ public class MainViewModelTests
     private Mock<ISettingsService> _mockSettingsService = null!;
     private Mock<ILocalizationService> _mockLocalizationService = null!;
     private Mock<IBackgroundImageService> _mockBackgroundImageService = null!;
+    private Mock<IConfiguration> _mockConfiguration = null!;
     private MainViewModel _viewModel = null!;
 
     [SetUp]
@@ -22,6 +24,7 @@ public class MainViewModelTests
         _mockSettingsService = new Mock<ISettingsService>();
         _mockLocalizationService = new Mock<ILocalizationService>();
         _mockBackgroundImageService = new Mock<IBackgroundImageService>();
+        _mockConfiguration = new Mock<IConfiguration>();
 
         // Setup default localization strings
         _mockLocalizationService.Setup(x => x.GetString(It.IsAny<string>())).Returns((string key) => key);
@@ -31,12 +34,16 @@ public class MainViewModelTests
         _mockSettingsService.Setup(x => x.GetSelectedLanguageAsync()).ReturnsAsync("中文");
         _mockSettingsService.Setup(x => x.GetLastSelectedCityAsync()).ReturnsAsync("Beijing");
         _mockBackgroundImageService.Setup(x => x.GetBackgroundImagePathAsync()).ReturnsAsync(string.Empty);
+        
+        // Setup default configuration
+        _mockConfiguration.Setup(x => x["WeatherApi:ApiKey"]).Returns("test-api-key");
 
         _viewModel = new MainViewModel(
             _mockCacheService.Object,
             _mockSettingsService.Object,
             _mockLocalizationService.Object,
-            _mockBackgroundImageService.Object
+            _mockBackgroundImageService.Object,
+            _mockConfiguration.Object
         );
     }
 
